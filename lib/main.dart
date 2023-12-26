@@ -97,6 +97,13 @@ class _MySlider extends State<MySlider>{
   bool? _activeOrNot = false;
   bool? _activeOrNot2 = false;
   String? _checkPass;
+  bool haveUpper=false;
+  bool haveLower=false;
+  bool haveNumber =false;
+  String firstName ='';
+  String lastName ='';
+  String email ='';
+  String password ='';
   final GlobalKey<FormState> _key =GlobalKey();
 
   String? _isActive = 'choice 3';
@@ -211,6 +218,7 @@ class _MySlider extends State<MySlider>{
      Column(children: [
       TextFormField(
         onSaved: (value){
+      firstName= value!;
           print(value);
         },
         validator: (value) {
@@ -222,6 +230,7 @@ class _MySlider extends State<MySlider>{
       ),
       TextFormField(
         onSaved: (newValue) {
+          lastName =newValue!;
           print(newValue);
         },
         validator: (value) {
@@ -233,6 +242,7 @@ class _MySlider extends State<MySlider>{
       ),
       TextFormField(
         onSaved: (newValue) {
+          email = newValue!;
           print(newValue);
           
         },
@@ -257,14 +267,13 @@ class _MySlider extends State<MySlider>{
       TextFormField(
         onSaved: (newValue) {
           print(newValue);
+          password = newValue!;
           _checkPass=newValue;
           
         },
         validator: (value) {
           _checkPass=value;
-          bool haveUpper=false;
-          bool haveLower=false;
-          bool haveNumber =false;
+
           String? lowerChar = 'abcdefghijklmnopqrstuvwxyz';
           String? upperChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
           String? numberChar = '0123456789';
@@ -275,13 +284,13 @@ class _MySlider extends State<MySlider>{
             for(var i =0 ;i <value!.length;i++){
 
               for (var j =0 ;j<lowerChar!.length;j++){
-                      if (value[i].toLowerCase()==lowerChar[j]){
+                      if (value[i]==lowerChar[j]){
                               haveLower =true;
                                     }
                           
               }
               for ( var k =0 ;k<upperChar.length;k++){
-                if (value[i].toUpperCase()==upperChar[k]){
+                if (value[i]==upperChar[k]){
                   haveUpper=true;
                 }
               }
@@ -300,6 +309,7 @@ class _MySlider extends State<MySlider>{
 
             //  3 val true > condition false 
             if (haveNumber ==false || haveLower==false || haveUpper==false){
+
               return 'you miss upper ,lower or numb';
             }
             
@@ -311,6 +321,10 @@ class _MySlider extends State<MySlider>{
           if(value==null|| value.isEmpty){
             return 'empty field ';
           }
+          haveNumber=false;
+          haveLower=false;
+          haveUpper=false;
+          
         },
         decoration: InputDecoration(label:Text('Password')),
       ),
@@ -328,6 +342,7 @@ class _MySlider extends State<MySlider>{
           if (value != _checkPass){
             return 'Password not matched';
           }
+
           
         },
         decoration: InputDecoration(label:Text('Conferm Password')),
@@ -343,13 +358,52 @@ class _MySlider extends State<MySlider>{
       // add a button to submit the form
       SizedBox(height: 100,),
       ElevatedButton(
-        onPressed: (){
+        // onPressed: (){
+        //   if(_key.currentState!.validate()){
+        //     _key.currentState!.save();
+        //     print('form saved');
+
+        //   }
+        // },
+        onPressed: () {
           if(_key.currentState!.validate()){
             _key.currentState!.save();
-            print('form saved');
+            showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('save user'),
+          content:Container(
+            height: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+            Text('save the USER data '),
+          Text('firstName: $firstName '),
+          Text('lastName: $lastName '),
+          Text('email: $email '),
+          Text('password: $password'),
+          ],
+          ),)  ,
+          
+          
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => {
+                Navigator.pop(context, 'OK'),
+                _key.currentState!.reset()
 
+                },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
           }
-        },
+      },
         child: Text('submit'),
       ),
       
@@ -372,5 +426,4 @@ class _MySlider extends State<MySlider>{
 // 7-phone number, 8- birthday,
 
 //  new task fix the issue of the pass validor , tell the user just the missing valid
-//  user the alert widg
-
+//  user the alert wid
