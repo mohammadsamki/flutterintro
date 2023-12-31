@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
-
+import 'home.dart';
+import 'secondPage.dart';
 // class MyApp extends StatefulWidget{
 //   @override  // Override call a method inside the parent class 
 //   // and override (overwrite)
@@ -77,12 +78,22 @@ import 'package:flutter/material.dart';
 void main(){
   runApp(MyApp());
 }
+class RouteArg{
+  final String? title;
+  final String? message;
 
+  RouteArg(String? this.title,String? this.message);
+}
 class MyApp extends StatelessWidget{
 @override
 Widget build(BuildContext context){
   return MaterialApp(
-    home:MySlider(),
+   initialRoute: '/',
+   routes: {
+    '/':(context) => HomePage(),
+    '/second':(context) => SecondPage(),
+    '/register':(context) => MySlider()
+   },
   );
 }
 }
@@ -377,7 +388,7 @@ class _MySlider extends State<MySlider>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            Text('save the USER data '),
+          Text('save the USER data '),
           Text('firstName: $firstName '),
           Text('lastName: $lastName '),
           Text('email: $email '),
