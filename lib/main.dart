@@ -97,6 +97,12 @@ Widget build(BuildContext context){
   );
 }
 }
+class UserInput{
+  String? email;
+  String? password;
+
+  UserInput(String? this.email,String? this.password);
+}
 
 class MySlider extends StatefulWidget{
   @override
@@ -404,7 +410,7 @@ class _MySlider extends State<MySlider>{
             ),
             TextButton(
               onPressed: () => {
-                Navigator.pop(context, 'OK'),
+                Navigator.popAndPushNamed(context, HomePage.routeName,arguments: UserInput(email, password)),
                 _key.currentState!.reset()
 
                 },

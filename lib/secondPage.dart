@@ -8,12 +8,13 @@ class SecondPage extends StatelessWidget{
 @override
 Widget build (BuildContext context){
   // final RouteArg arg = ModalRoute.of(context).settings.arguments;
-  //  RouteArg arg = ModalRoute.of(context).settings.arguments;
-  // print(arg);
+  //  as : reassigned the value to class type 
+    RouteArg? arg = ModalRoute.of(context)!.settings.arguments as RouteArg?;
+  print(arg);
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Colors.blue,
-      title: Text('arg.title!'),
+      title: Text(arg?.title ?? 'deafult'),
     ),
     body: ElevatedButton(onPressed: () {
       Navigator.pop(context, 
