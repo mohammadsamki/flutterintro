@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget{
 @override
 Widget build(BuildContext context){
   return MaterialApp(
-   initialRoute: '/',
+   initialRoute: '/second',
    routes: {
     '/':(context) => HomePage(),
     '/second':(context) => SecondPage(),
